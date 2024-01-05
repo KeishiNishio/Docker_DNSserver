@@ -1,6 +1,6 @@
 # NSDベースのDNSサーバー
 
-このリポジトリは、NSD (Name Server Daemon) を使用してDNSサーバーを構築するための設定ファイル群です。
+このリポジトリは、DockerコンテナにNSD (Name Server Daemon) を使用してDNSサーバーを構築するための設定ファイル群です。
 
 ### **NSDの選択理由**
 
