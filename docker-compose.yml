@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  nsd:
+    build: .
+    container_name: my-nsd-server
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - ./nsd.conf:/etc/nsd/nsd.conf
+      - ./zonefile.zone:/var/nsd/zones/zonefile.zone
