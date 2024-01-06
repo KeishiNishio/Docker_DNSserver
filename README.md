@@ -90,3 +90,14 @@ docker stop $(docker ps -aq) || true
 ```bash
 docker rm -f $(docker ps -aq) || true
 ```
+
+
+## 開発環境
+
+このプロジェクトは以下の環境で開発されています:
+
+- **オペレーティングシステム**: macOS
+- **Docker**:
+  - バージョン: 24.0.5
+- **Docker Compose**:
+  - バージョン: 2.23.3
