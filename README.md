@@ -1,103 +1,103 @@
-# NSDベースのDNSサーバー
+# NSD-Based DNS Server
 
-このリポジトリは、DockerコンテナにNSD (Name Server Daemon) を使用してDNSサーバーを構築するための設定ファイル群です。
+---
 
-### **NSDの選択理由**
+## Overview
 
-従来は、BINDがDNSの実装に広く使用されてきたようですが、BINDは脆弱性が度々発見され、セキュリティ的に運用が難しいことから、以下の観点から優れた代替手段としてNSDを選定しました。
+This repository contains configuration files for setting up a DNS server using NSD (Name Server Daemon) in a Docker container.
 
-- BINDに比べて、高度なセキュリティ
-- 読み取り専用の機能に特化し、大規模な環境でも高速で安定したパフォーマンス
-- BINDと比較し、設定がシンプル
+### **Reason for Choosing NSD**
 
-参考サイト
+While BIND has been widely used for DNS implementations, its frequent vulnerabilities and challenging security management led us to select NSD as a superior alternative for the following reasons:
 
-[https://qiita.com/ohhara_shiojiri/items/497aaba989151fa84b3d](https://qiita.com/ohhara_shiojiri/items/497aaba989151fa84b3d)
+- Enhanced security compared to BIND.
+- Specialization in read-only operations, ensuring fast and stable performance in large-scale environments.
+- Simpler configuration compared to BIND.
 
-### **システム構成図**
+Reference:
+[NSD vs BIND Comparison](https://qiita.com/ohhara_shiojiri/items/497aaba989151fa84b3d)
 
-クライアント（ローカルホスト）からの名前解決クエリを受け取り、権威DNSサーバからクライアントにIPアドレスを返送する
+### **System Architecture**
 
-![システム構成図](https://github.com/KeishiNishio/Docker_DNSserver/blob/main/%20systemimage1.png)
+The system receives name resolution queries from clients (localhost) and returns IP addresses from the authoritative DNS server back to the clients.
 
-## セットアップ手順
+![System Architecture Diagram](https://github.com/KeishiNishio/Docker_DNSserver/blob/main/%20systemimage1.png)
 
-1. **リポジトリのクローン**: まず、このリポジトリをローカルマシンにクローンします。
-    
-    ```
+## Setup Instructions
+
+1. **Clone the Repository**: First, clone this repository to your local machine.
+
+    ```bash
     git clone https://github.com/KeishiNishio/Docker_DNSserver.git
-    
     ```
     
-2. **Dockerイメージのビルド**: 次に、提供された`Dockerfile`を使用してDockerイメージをビルドします。
-    
-    ```
+2. **Build the Docker Image**: Next, use the provided `Dockerfile` to build the Docker image.
+
+    ```bash
     docker-compose build
     ```
     
-3. **Dockerコンテナの起動**: 以下のコマンドでDockerコンテナを起動します。
-    
-    ```
+3. **Launch the Docker Container**: Start the Docker container with the following command.
+
+    ```bash
     docker-compose up -d
     ```
     
+With these steps, the NSD-based DNS server will be up and running.
 
-これで、NSDベースのDNSサーバーが起動します。
+### Verifying Functionality
 
-### 挙動の確認
-
-以下のコマンドを実行すると、対応するIPアドレスが返送されます。
+Executing the following command should return the corresponding IP address:
 
 ```bash
 dig @localhost example.com
 ```
 
-## ファイル構成
+## File Structure
 
-- `docker-compose.yml`: NSDサービスのDocker設定を含んでいます。
-- `Dockerfile`: NSDのインストールと設定ファイルの配置を指示します。
-- `nsd.conf`: NSDの設定ファイルです。
-- `zonefile.zone`: `example.com`ドメインのDNSゾーンファイルです。
+- `docker-compose.yml`: Contains Docker configurations for the NSD service.
+- `Dockerfile`: Directs the installation of NSD and the placement of configuration files.
+- `nsd.conf`: The configuration file for NSD.
+- `zonefile.zone`: The DNS zone file for the `example.com` domain.
 
-## 他便利なコマンド
+## Other Useful Commands
 
-1. システム全体のDockerキャッシュを削除
+1. Delete all Docker cache system-wide:
 
-```bash
-docker system prune --all --force
-```
+    ```bash
+    docker system prune --all --force
+    ```
 
-1. 設定したネットワークにコンテナが所属しているか確認
+2. Check if containers belong to the configured network:
 
-```bash
-docker network inspect nginx-network
-```
+    ```bash
+    docker network inspect nginx-network
+    ```
 
-1. コンテナの状況確認
+3. Check the status of containers:
 
-```bash
-docker ps -a
-```
+    ```bash
+    docker ps -a
+    ```
 
-1. 存在する全てのコンテナを停止
+4. Stop all existing containers:
 
-```bash
-docker stop $(docker ps -aq) || true
-```
+    ```bash
+    docker stop $(docker ps -aq) || true
+    ```
 
-1. 存在する全てのコンテナを削除
+5. Remove all existing containers:
 
-```bash
-docker rm -f $(docker ps -aq) || true
-```
+    ```bash
+    docker rm -f $(docker ps -aq) || true
+    ```
 
+## Development Environment
 
-## 開発環境
+This project is developed in the following environment:
 
-このプロジェクトは以下の環境で開発されています:
-
-- **オペレーティングシステム**: macOS
+- **Operating System**: macOS
 - **Docker**:
-  - バージョン: 24.0.5
+  - Version: 24.0.5
 - **Docker Compose**:
-  - バージョン: 2.23.3
+  - Version: 2.23.3
