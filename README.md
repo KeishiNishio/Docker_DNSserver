@@ -25,7 +25,7 @@
 1. **リポジトリのクローン**: まず、このリポジトリをローカルマシンにクローンします。
     
     ```
-    git clone [このリポジトリのURL]
+    git clone https://github.com/KeishiNishio/Docker_DNSserver.git
     
     ```
     
